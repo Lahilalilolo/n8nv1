@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>n8n Android Trigger</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="font-family:Arial;padding:20px">
+<h2>Envoyer vers n8n</h2>
+
+<input id="msg" placeholder="Message" style="width:100%;padding:10px"/>
+<br><br>
+<button onclick="send()" style="padding:10px;width:100%">Envoyer</button>
+
+<script>
+function send() {
+  fetch("https://n8n.abderai.fr/webhook/a1ad0eba-6aca-432a-b0d1-0d201fbb146c", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: document.getElementById("msg").value,
+      source: "android-app"
+    })
+  })
+  .then(r => r.json())
+  .then(() => alert("Message envoyé à n8n"))
+  .catch(() => alert("Erreur de connexion"));
+}
+</script>
+
+</body>
+</html>
