@@ -24,25 +24,24 @@
   </button>
 
   <script>
-    function send() {
-      fetch("https://n8n.abderai.fr/webhook/a1ad0eba-6aca-432a-b0d1-0d201fbb146c", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          message: document.getElementById("msg").value,
-          source: "android-app"
-        })
-      })
-      .then(() => {
-        alert("Message envoyé à n8n");
-      })
-      .catch((err) => {
-        console.error("Erreur fetch :", err);
-        alert("Erreur de connexion");
-      });
-    }
+function send() {
+  fetch("https://n8n.abderai.fr/webhook/a1ad0eba-6aca-432a-b0d1-0d201fbb146c", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: document.getElementById("msg").value,
+      source: "android-app"
+    })
+  })
+  .then(r => r.json())  // récupère le JSON renvoyé par n8n
+  .then(data => {
+    alert("Réponse IA : " + data.reply); // affiche la réponse IA
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Erreur de connexion");
+  });
+}
   </script>
 
 </body>
